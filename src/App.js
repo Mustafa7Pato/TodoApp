@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import AddUser from "./Components/Users/AddUser";
+import UsersList from "./Components/Users/UsersList";
 
-function App() {
+const App = () => {
+  const [addGoals, setAddGoals] = useState([]);
+  const addGoalHandler = (goals) => {
+    setAddGoals((prevState) => {
+      return [...prevState, { task: goals }];
+    });
+  };
+  const handleDeleteGoal = (goal) => {
+    const updatedGoals = addGoals.filter((g) => g !== goal);
+    setAddGoals(updatedGoals);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <AddUser onAddGoals={addGoalHandler} />
+      <UsersList goals={addGoals} onDelete={handleDeleteGoal} />
     </div>
   );
-}
+};
 
 export default App;
